@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+
+<table border="1">
+    <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+    <thead>
+        <tr>
+
+            <td bgcolor="yellow"> Tweet </td>
+            <td bgcolor="yellow"> Sentiment </td>
+        </tr>
+    </thead> 
+    <tbody>
+      <h1> Twitter Sentiment Analysis:</h1>
+        <title>Twitter Sentiment Analysis</title>
+        {% for tweet in records['P_tweets:'] %}
+        <tr>
+            <td>{{ tweet }}</td>
+            
+            <td bgcolor="green">Positive</td>
+            <td style="text-align:center">-</td>
+        </tr>
+        {% endfor %}
+ 
+        {% for tweet in records['N_tweets:'] %}
+        <tr>
+            <td>{{ tweet }}</td>
+            <td bgcolor="red">Negative</td>
+            <td style="text-align:center">-</td>
+            
+        </tr>
+        {% endfor %}
+
+        {% for tweet in records['Neu_tweets:'] %}
+        <tr>
+            <td>{{ tweet }}</td>
+            <td bgcolor="blue">Neutral</td>
+            <td style="text-align:center">-</td>
+        </tr>
+        
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<head>
+  <meta charset="utf-8" />
+  <title>Twitter Sentiment Analysis</title>
+  <title>{{ title }}</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+
+<body>
+  <h1> Twitter Sentiment Analysis: </h1>
+    <h1>{{ title }}</h1>
+
+    <canvas id="chart" width="600" height="400"></canvas>
+    <script>
+      var pieData = [
+        {% for item, label,colors in set %}
+          {
+            value: "{{item}}",
+            label: "{{label}}",
+            color: "{{colors}}"
+          },
+        {% endfor %}
+      ];
+
+      // get bar chart canvas
+      var mychart = document.getElementById("chart").getContext("2d");
+      steps = 10
+      max = "{{ max }}"
+
+      // draw pie chart
+      new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+
+    </script>
+</body>
+</html>
